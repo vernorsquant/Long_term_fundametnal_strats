@@ -1,0 +1,13 @@
+,CAGR,AnnVol,Sharpe,MaxDD,TotalReturn
+"Quality GP/A top-decile (annual, Novy-Marx 2013)",9.6%,16.0%,0.65,-32.6%,359.8%
+Quality GP/A top-decile (monthly),9.8%,16.3%,0.66,-30.2%,372.6%
+Momentum top-1/3 cap-wtd semi-annual (MTUM convention),12.7%,17.1%,0.79,-28.5%,625.8%
+Quality+Momentum 50/50 rank blend (monthly),9.7%,17.8%,0.61,-33.5%,364.3%
+"SPMO approx v1 (quarterly, cap-weighted)",11.0%,18.1%,0.67,-31.7%,463.7%
+"Quality-momentum double sort (GP/A>=median, mom top-dec)",7.5%,17.7%,0.50,-32.9%,232.4%
+"S&P 500 Momentum Index replica (verified spec: semi-annual, mcap x score)",11.9%,15.5%,0.80,-27.3%,546.7%
+ValMomProf top-decile (Novy-Marx & Velikov RFS 2016),11.2%,18.1%,0.68,-33.4%,480.0%
+prior: S1 Multi-Factor Composite,10.2%,14.6%,0.74,-30.8%,400.7%
+prior: S2 Net Payout Yield,12.0%,19.3%,0.68,-37.9%,558.5%
+prior: S3 Ungated Momentum,9.7%,19.7%,0.57,-35.1%,366.4%
+SPY buy&hold,14.3%,17.1%,0.87,-33.7%,820.5%

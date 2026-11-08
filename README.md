@@ -1,37 +1,89 @@
 # Long-Term Fundamental Strategies
 
-Research + backtests for simple, economically-motivated, long-term stock-selection
-strategies — the portfolio-selection component of a larger system (regime detection
-+ risk management live upstream). Compiled 2026-11-07.
+## 60-minute published-strategy search vs the S&P 500 — honest result (2026-11-08)
 
-## Contents
+**Assignment:** find a simple, PUBLISHED (not self-engineered) long-term stock-selection
+strategy that comfortably outperforms the S&P 500; backtest it on the same harness as
+the prior strategies on this repo; post the results.
 
-| Path | What it is |
-|---|---|
-| [`literature/REPORT.md`](./literature/REPORT.md) | Main literature report — ~55 fetch-verified sources across 9 rabbit holes (low-vol anomaly, weighting schemes, momentum/trend, insider/smart-money, value/quality composites, factor combination, seasonality/issuance anomalies, replication methodology, regime dependence) |
-| [`literature/round1_findings.md`](./literature/round1_findings.md) | Raw round-1 research notes (5 facets) |
-| [`literature/session_log.md`](./literature/session_log.md) | Research session timestamps |
-| [`backtests/README.md`](./backtests/README.md) | LEAN backtest results, interpretation, methodology caveats |
-| [`backtests/TOP3_STRATEGIES.md`](./backtests/TOP3_STRATEGIES.md) | The three chosen strategies + selection rationale |
-| [`backtests/metrics.csv`](./backtests/metrics.csv) | Combined metrics table |
-| `backtests/s1_composite.md` … `s3_gate_test.md` | Per-strategy reports + pre-registered gate test |
+**Result: no candidate passed the pre-registered bar.** Eight published strategies were
+tested, plus the three prior sleeves — every one lost to SPY buy-and-hold
+(**14.3% CAGR, 0.87 Sharpe, 820% total**) over 2010-01-04 → 2026-08-13 on the identical
+LEAN harness (817-name Sharadar panel, $100k, 5bp/side slippage, long-only, no leverage).
 
-## The three strategies (LEAN, 2010-01 → 2026-08, $100k, 5bp/side)
+## Full comparison (uniform metrics from daily equity curves)
 
-| Strategy | Rule | CAGR | Sharpe | MaxDD |
-|---|---|---|---|---|
-| S1 Multi-Factor Composite | equal ranks: B/M + profitability + low-vol + 12-2 momentum; top decile, EW, 3% cap, monthly | 10.2% | 0.74 | −30.8% |
-| S2 Net Payout Yield | (dividends + net buybacks)/mcap top decile, EW, annual | 12.0% | 0.68 | −37.9% |
-| S3 SMA-Gated Momentum | 12-2 momentum, gated by index 200-day SMA | 8.9% | 0.55 | −36.0% |
-| *SPY buy&hold (reference)* | — | 14.3% | 0.87 | −33.7% |
+| Strategy | CAGR | Vol | Sharpe | MaxDD | Total |
+|---|---|---|---|---|---|
+| Quality GP/A top-decile, annual (Novy-Marx 2013) | 9.6% | 16.0% | 0.65 | −32.6% | 360% |
+| Quality GP/A top-decile, monthly | 9.8% | 16.3% | 0.66 | −30.2% | 373% |
+| Momentum top-1/3 cap-weighted semi-annual (MTUM convention) | 12.7% | 17.1% | 0.79 | −28.5% | 626% |
+| Quality+Momentum 50/50 rank blend, monthly | 9.7% | 17.8% | 0.61 | −33.5% | 364% |
+| SPMO approx v1 (quarterly, cap-weighted) | 11.0% | 18.1% | 0.67 | −31.7% | 464% |
+| Quality-momentum double sort (GP/A≥median → mom top-decile) | 7.5% | 17.7% | 0.50 | −32.9% | 232% |
+| **S&P 500 Momentum Index replica (verified spec)** | **11.9%** | **15.5%** | **0.80** | **−27.3%** | **547%** |
+| ValMomProf top-decile (Novy-Marx & Velikov, RFS 2016) | 11.2% | 18.1% | 0.68 | −33.4% | 480% |
+| *prior: S1 Multi-Factor Composite* | *10.2%* | *14.6%* | *0.74* | *−30.8%* | *401%* |
+| *prior: S2 Net Payout Yield* | *12.0%* | *19.3%* | *0.68* | *−37.9%* | *559%* |
+| *prior: S3 Ungated Momentum* | *9.7%* | *19.7%* | *0.57* | *−35.1%* | *366%* |
+| **SPY buy&hold (benchmark)** | **14.3%** | **17.1%** | **0.87** | **−33.7%** | **820%** |
 
-## Honest headline
+Pre-registered success bar (set before any results were seen): CAGR ≥ SPY+2pp (≥16.3%)
+with MaxDD within ~3pp of SPY's. Nothing passed. This table replaces the prior repo
+content per the assignment ("overwrite, non-sequential"); the three prior sleeves are
+kept as comparison rows.
 
-SPY beat all three over this window — expected, since 2010→2026 is a growth-led
-bull, the documented failure regime for value/low-vol defensive tilts. The claim
-these sleeves test is full-cycle risk-adjusted robustness (S1: SPY-like
-participation at 14.6% vol vs 17.1%), not bull-market relative return. The S3
-SMA gate **failed** its pre-registered test (ΔSharpe −0.02 vs required +0.15) and
-is reported as a negative result. Universe is a static 817-name snapshot with
-survivorship bias — treat absolute numbers as upper bounds; relative ordering is
-the usable signal. Details and caveats: [`backtests/README.md`](./backtests/README.md).
+## What the published evidence itself says (all fetch-verified this session)
+
+- **SPMO** (S&P 500 Momentum Index, per its SEC-filed prospectus): fund +17.81%/yr vs
+  S&P 500 +17.04%/yr since inception **through 2021 — parity**. Essentially all of its
+  famous outperformance is 2024 (+45.8% vs +24.9%) and 2025 (+26.6% vs +17.7%).
+- **Quality long-only lost to SPY 2010-2026**: iShares QUAL 13.52% vs SPY 13.88%
+  (computed from daily data; fact-sheet SI 13.81% cross-check).
+- **MTUM since 2013**: 14.76% vs SPY 14.12% CAGR — but lower Sharpe (0.90 vs 1.00) and
+  deeper max drawdown (−30% vs −24%).
+- **Momentum decile D10** (Ken French, 2010-2026): +3.6pp/yr CAGR over the market but
+  higher vol → lower Sharpe; the long-short premium post-2013 is only ~3%/yr.
+- **Trend factor** (Han-Zhou-Zhu 2016): value-weighted US replication 2020-2024 alpha
+  ≈ 0 (OSAP: IR −0.02); robust internationally (JFE 2025) but not in US large caps.
+- **ValMomProf** is published as a long-short composite ("the clear winner" of 23
+  anomalies after costs, RFS 2016); its long-only top-decile expression inherits
+  value drag in this growth-led window.
+- **Madhogarhia 2019** ("Can Simple Strategies Beat S&P 500?"): its big winners needed
+  short-interest + ROIC screens (not implementable on prices + annual fundamentals),
+  were post-2009-driven, and its own size-only arm *underperformed* 2013-17.
+
+**Bottom line:** 2010→2026 is a growth-led mega-cap bull — the documented failure
+regime for value/quality tilts and for diversification away from cap-weighted beta.
+The honest claim this table supports: the verified-spec SPMO replica delivers
+**SPY-like participation at meaningfully lower risk** (vol 15.5% vs 17.1%, MaxDD
+−27.3% vs −33.7%) — the best risk-adjusted profile of all eleven strategies tested —
+but nothing simple and published comfortably beat SPY on raw return in this window.
+
+## Files
+
+- `metrics.csv` — full comparison table (11 strategies + SPY)
+- `combined_equity.png` — all 8 candidates vs SPY (log scale)
+- `drawdowns.png` — drawdown profiles
+- `all_metrics.json` — machine-readable metrics
+
+## Methodology (identical harness for every strategy)
+
+- Native LEAN (.NET 10), local Sharadar-derived panel (817 names incl. delisted
+  history), 2010-01-04 → 2026-08-13, $100k, 5bp/side slippage, long-only.
+- Fundamentals: Sharadar SF1 ART annual, filed-date (datekey) keyed with 90-day lag →
+  no look-ahead. Momentum strategies use prices only.
+- Sharpes computed uniformly from daily equity curves (mean/std × √252, rf=0).
+- Universe caveat: static 817-name snapshot assembled 2026 → absolute numbers are
+  upper bounds; cross-strategy comparisons are apples-to-apples.
+- Replication caveats: the SPMO replica omits the index's 20% buffer rule and uses
+  pct-rank scores for weighting (S&P's standardized score units unverifiable —
+  methodology PDF bot-walled); selection/rebalance/weighting shape verified against
+  the SEC-filed prospectus (semi-annual Mar/Sep, top 100, mcap×score, 9%/3× cap).
+
+## Session log
+
+Start 2026-11-08 14:31:54 EST, end ~15:31 EST — 60-minute wall-clock budget consumed
+in full. Round 1: breadth sweep + depth tunnel (2 parallel agents). Round 2: SPMO
+verifier + gap-filler (2 parallel agents, primary-source checks incl. SEC filings).
+8 LEAN backtests run in 4 waves of 2 concurrent.
