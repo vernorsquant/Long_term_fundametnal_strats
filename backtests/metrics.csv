@@ -1,0 +1,6 @@
+,CAGR,AnnVol,Sharpe,Sortino,MaxDD,WinRate(daily),TotalReturn
+S1: Multi-Factor Composite,10.2%,14.6%,0.74,0.90,-30.8%,52%,401%
+S2: Net Payout Yield,12.0%,19.3%,0.68,0.87,-37.9%,49%,559%
+S3: SMA-Gated Momentum,8.9%,18.8%,0.55,0.67,-36.0%,51%,312%
+S3 control: Ungated Momentum,9.7%,19.7%,0.57,0.71,-35.1%,51%,366%
+SPY buy&hold,14.3%,17.1%,0.87,1.07,-33.7%,55%,820%
