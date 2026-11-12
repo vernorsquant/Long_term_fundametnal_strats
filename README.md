@@ -1,5 +1,52 @@
 # Long-Term Fundamental Strategies
 
+## HRP on every strategy — honest result (2026-11-11)
+
+**Assignment:** take all 11 strategies on this repo and apply HRP (hierarchical
+risk parity) portfolio construction to each selection pool; post results.
+
+**Result: raw HRP lowers Sharpe on 9 of 11 strategies.** Nothing crosses
+Sharpe 1.2. The best risk-adjusted lines remain the monthly quality base
+(0.93) and annual quality base (0.91) — statistically tied with SPY
+buy-and-hold (0.91) — and the best *construct* is the multi-factor composite
+under HRP + 10% vol targeting: **0.89 Sharpe at 10.7% vol with −17.1% MaxDD**
+(vs SPY −33.7%), trading ~5pp of CAGR for half the drawdown.
+
+Re-implemented on one honest PIT harness (Sharadar, PIT S&P 500 membership,
+filing-date-gated ART fundamentals, 500d price history at selection, next-day
+close execution, 5bp/side costs on **all** variants, 2012-01 → 2025-12).
+Engine validated: cap-weighting the full eligible universe gives 13.8% CAGR /
+0.85 Sharpe vs SPY 14.8% / 0.91 on the identical pipeline; an independent
+recomputation caught a cost-placement bug (segment costs charged daily) which
+was fixed before these numbers. Specs are re-implementations — the original
+LEAN configs were lost when this repo was overwritten; ordering matches the
+LEAN table (momentum variants best, double-sort worst).
+
+| Strategy | base Sharpe | HRP | HRP+10% VT | dSharpe (HRP−base) |
+|---|---|---|---|---|
+| c2_quality_m (GP/A monthly) | **0.93** | 0.70 | 0.69 | −0.23 |
+| c1_quality_a (GP/A annual) | **0.91** | 0.68 | 0.69 | −0.23 |
+| SPY buy&hold | 0.91 | — | — | — |
+| s1_multi_factor | 0.79 | 0.79 | **0.89** (−17% MaxDD) | +0.00 |
+| c7_spmo_replica (mom index) | 0.85 | 0.76 | 0.80 | −0.09 |
+| c5_spmo_q (SPMO approx) | 0.85 | 0.70 | 0.77 | −0.15 |
+| c8_valmomprof | 0.73 | 0.71 | 0.77 | −0.02 |
+| c3_mtum_sa (momentum 1/3 SA) | 0.75 | 0.71 | 0.76 | −0.04 |
+| c4_qm50 (quality+momentum) | 0.71 | 0.74 | 0.74 | +0.03 |
+| s3_ungated_momentum | 0.68 | 0.46 | 0.50 | −0.22 |
+| s2_net_payout_yield | 0.59 | 0.39 | 0.33 | −0.20 |
+| c6_qm_double (double sort) | 0.57 | 0.47 | 0.48 | −0.10 |
+
+**Why HRP hurts here:** the selection pools are already sorted on a factor
+(momentum/quality/value), so HRP's inverse-variance tilt systematically
+underweights exactly the names carrying the factor premium — it diversifies
+away the very exposure the screen selects for. Vol-targeted HRP is the
+consistent drawdown-halver (MaxDD −17% to −28% everywhere) at a cost of
+4-9pp CAGR when realized vol exceeds target. Full tables, equity curves and
+harness: `hrp-alpha-filters/results_ltfund/` (private repo).
+
+---
+
 ## 60-minute published-strategy search vs the S&P 500 — honest result (2026-11-08)
 
 **Assignment:** find a simple, PUBLISHED (not self-engineered) long-term stock-selection
