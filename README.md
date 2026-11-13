@@ -1,5 +1,31 @@
 # Long-Term Fundamental Strategies
 
+## Russell 3000 test — the universe lever fails too (2026-11-12)
+
+The last untried structural lever for Sharpe 1.2+: run the three S&P winners
+(qarp_t, roe_m, qlb) on the PIT Russell 3000 (24.3M-row price DB, quarterly
+PIT universe rebuild from trailing market cap), with a standard investability
+screen (price ≥ $5, ≥$1M/day median dollar volume) and **10bp/side costs**
+(small-cap liquidity), 5bp control on the winner.
+
+| screened R3K | Sharpe @10bp | Sharpe @5bp | AnnVol | MaxDD |
+|---|---|---|---|---|
+| qarp_t base | **0.826** | 0.857 | 19.9% | −27.0% |
+| roe_m hrp_dvt | 0.500 | — | 24.3% | −24.3% |
+| roe_m base | 0.419 | — | **43.8%** | **−76.3%** |
+| qlb base | 0.211 | — | 40.7% | −82.7% |
+| sleeve-HRP meta (3 sleeves) | 0.567 | — | 11.3% | −21.9% |
+| SPY buy&hold (benchmark) | 0.91 | — | 16.7% | −33.7% |
+
+**Verdict: the R3K lever fails.** Even screened, the fundamental sleeves on
+the wide universe carry 25-44% annualized vol and −24% to −83% drawdowns —
+high-ROE / quality-scored small caps are lottery-ticket land, and the extra
+cross-sectional dispersion buys CAGR, not Sharpe. Costs matter exactly as the
+skeptics predict (qarp_t: 0.857 @5bp → 0.826 @10bp). Unscreend R3K numbers
+are worse (−20% CAGR / −99% MaxDD portfolios from penny-stock contamination —
+kept in results_r3k.csv as the documented negative). Sleeve correlations stay
+high; the meta-portfolio still dilutes (0.567 best).
+
 ## Round 2 — designer specs + published factors × HRP (2026-11-12)
 
 Follow-up to the HRP experiment below: 9 pre-registered candidates tested on
