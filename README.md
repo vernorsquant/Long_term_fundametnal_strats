@@ -1,5 +1,40 @@
 # Long-Term Fundamental Strategies
 
+## Round 2 — designer specs + published factors × HRP (2026-11-12)
+
+Follow-up to the HRP experiment below: 9 pre-registered candidates tested on
+the same harness — 6 agent-designed fundamental-gated price-quality specs and
+3 published factors (CbOP cash profitability [Ball et al. JFE 2016], monthly
+ROE [q-factor], quality×low-beta [AQR defensive equity]) — plus HRP with
+lagged **downside**-vol targeting and a sleeve-level HRP meta-portfolio.
+
+| candidate | base Sharpe | best variant Sharpe | best variant | MaxDD |
+|---|---|---|---|---|
+| qlb — quality × low-beta | 0.86 | **0.98** | HRP | −28.0% |
+| qarp_t — FCF-yield × Sharpe blend, SMA150 gate | 0.85 | **0.97** | HRP (dvt 0.97, −26.5%) | −34.9% |
+| roe_m — monthly ROE top-decile | **0.93** | 0.93 | base | −33.0% |
+| cbop_a — cash-based operating profitability, annual | **0.92** | 0.92 | base | −32.4% |
+| qsr — GP/A gate + 120d Sharpe rank | 0.91 | 0.91 | base | −29.5% |
+| rank_df — anchored-rank buffer bands | 0.88 | 0.88 | base | −27.2% |
+| fmom_t — fundamental momentum × SMA100 | 0.87 | 0.87 | base | −29.3% |
+| regime_qf — quality/defensive rotation on SPY SMA200 | 0.86 | 0.86 | base | −33.0% |
+| buy_t — net-buyback + trend confirm | 0.79 | 0.79 | base | −36.5% |
+| sleeve-HRP meta-portfolio (6 sleeves) | — | 0.80 | fund | −25.7% |
+
+**Verdict: still no Sharpe ≥ 1.2.** The two hybrid winners (qlb 0.98, qarp_t
+0.97) beat SPY risk-adjusted with meaningfully better drawdowns, but the
+margin over the plain quality bases (0.91-0.93) is thin and single-sample.
+Sleeve-level HRP did NOT diversify: the six sleeves are pairwise 0.58-0.96
+correlated (all share large-cap quality/momentum beta), so the meta-portfolio
+diluted to 0.80. The round-1 finding stands: after costs, on 2010-2025 US
+large caps, honest long-only fundamental+price-quality strategies cluster at
+**0.85-1.0 Sharpe**; HRP helps only when the pool is NOT already factor-sorted
+(qlb/qarp_t +0.11-0.12) and hurts when it is. Full tables, equity curves,
+correlation matrix and pre-registered spec file referenced in
+`hrp-alpha-filters/results_ltfund/RESULTS_ROUND2.md` (private repo).
+
+---
+
 ## HRP on every strategy — honest result (2026-11-11)
 
 **Assignment:** take all 11 strategies on this repo and apply HRP (hierarchical
